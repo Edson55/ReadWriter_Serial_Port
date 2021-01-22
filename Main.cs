@@ -15,7 +15,7 @@ namespace ReadWriter_Serial_Port
         SerialPorts SerialPorts = new SerialPorts();
         SerialPort CodeReader;
         public static SerialDataReceivedEventHandler CodeReaderHandler;
-        public static string ReadedConcat;
+       
         public Main()
         {
             InitializeComponent();
@@ -70,23 +70,13 @@ namespace ReadWriter_Serial_Port
         }
 
         private void ReaderCOde_Event(object sender, EventArgs e)
-        {
-           
+        {           
             BeginInvoke((MethodInvoker)(() => txtRead.Clear()));
-           string GetReader = SerialPorts.ReadSerialPort(ref CodeReader);
-           
-           
+           string GetReader = SerialPorts.ReadSerialPort(ref CodeReader);                      
           
-            if (!GetReader.Contains("\r"))
-            {
-                ReadedConcat = ReadedConcat + GetReader;
-            }
-            else
-            {
-              BeginInvoke((MethodInvoker)(() => txtRead.Text += ReadedConcat + GetReader));
-            PostScan(ReadedConcat+ GetReader);
-              ReadedConcat = string.Empty;
-            }
+            BeginInvoke((MethodInvoker)(() => txtRead.Text +=  GetReader));
+            PostScan(GetReader);
+
         }
 
         private void btnSelCOM_Click(object sender, EventArgs e)
